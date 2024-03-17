@@ -5,20 +5,21 @@ import net.brokenmoon.afloydwiremod.api.AbstractWireTile;
 import net.brokenmoon.afloydwiremod.tileentity.RedstoneLinkTileEntity;
 import net.minecraft.core.block.entity.TileEntity;
 import net.minecraft.core.block.material.Material;
+import net.minecraft.core.enums.EnumDropCause;
+import net.minecraft.core.item.Item;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.world.World;
 import net.minecraft.core.world.WorldSource;
-import net.minecraft.src.*;
-
 import java.util.Random;
 
 public class RedstoneLinkTile extends AbstractWireTile {
 
     boolean isActive;
 
-    public RedstoneLinkTile(int i, Material material, boolean isActive) {
-        super(i, material);
+    public RedstoneLinkTile(String key, int i, Material material, boolean isActive) {
+        super(key, i, material);
         this.isActive = isActive;
-        this.setTickOnLoad(true);
+        this.setTicking(true);
     }
 
     public static void updateLinkBlockState(boolean flag, World world, int x, int y, int z) {
@@ -54,9 +55,9 @@ public class RedstoneLinkTile extends AbstractWireTile {
     }
 
     @Override
-    public void onBlockRemoval(World world, int x, int y, int z) {
+    public void onBlockRemoved(World world, int x, int y, int z, int data) {
         if (world.getBlockTileEntity(x, y, z) != null && !((RedstoneLinkTileEntity) world.getBlockTileEntity(x, y, z)).shouldnotremove)
-            super.onBlockRemoval(world, x, y, z);
+            super.onBlockRemoved(world, x, y, z, data);
         world.notifyBlocksOfNeighborChange(x, y - 1, z, this.id);
         world.notifyBlocksOfNeighborChange(x, y + 1, z, this.id);
         world.notifyBlocksOfNeighborChange(x - 1, y, z, this.id);
@@ -93,7 +94,7 @@ public class RedstoneLinkTile extends AbstractWireTile {
     }
 
     @Override
-    protected TileEntity getBlockEntity() {
+    protected TileEntity getNewBlockEntity() {
         return new RedstoneLinkTileEntity();
     }
 
@@ -101,14 +102,8 @@ public class RedstoneLinkTile extends AbstractWireTile {
     public void onNeighborBlockChange(World world, int i, int j, int k, int l) {
         world.scheduleBlockUpdate(i, j, k, this.id, this.tickRate());
     }
-
-    @Override
-    public int idDropped(int i, Random random) {
-        return WireMod.LinkTileInactive.id;
-    }
-
-    @Override
-    protected int damageDropped(int i) {
-        return i;
-    }
+	@Override
+	public ItemStack[] getBreakResult(World world, EnumDropCause dropCause, int x, int y, int z, int meta, TileEntity tileEntity) {
+		return new ItemStack[]{new ItemStack(WireMod.LinkTileInactive)};
+	}
 }

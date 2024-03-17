@@ -10,13 +10,13 @@ import net.minecraft.core.world.World;
 import net.minecraft.server.entity.player.EntityPlayerMP;
 
 public abstract class AbstractWireTile extends BlockTileEntity {
-    public AbstractWireTile(int i, Material material) {
-        super(i, material);
+    public AbstractWireTile(String key, int i, Material material) {
+        super(key, i, material);
     }
     @Override
     public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player){
         AbstractWireTileEntity wireEntity = (AbstractWireTileEntity)world.getBlockTileEntity(x, y, z);
-        if (!world.isMultiplayerAndNotHost) {
+        if (!world.isClientSide) {
             if(player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().itemID == WireMod.ToolProgrammer.id && !wireEntity.initialized) {
                 this.displayProgrammingGui(player, wireEntity);
                 return true;
@@ -59,9 +59,9 @@ public abstract class AbstractWireTile extends BlockTileEntity {
         ((IEntityPlayer)player).displayGuiSettings(chip);
     }
     @Override
-    public void onBlockRemoval(World world, int x, int y, int z) {
+    public void onBlockRemoved(World world, int x, int y, int z, int data) {
         AbstractWireTileEntity tile = (AbstractWireTileEntity) world.getBlockTileEntity(x, y, z);
         tile.prepForDelete();
-        super.onBlockRemoval(world, x, y, z);
+        super.onBlockRemoved(world, x, y, z, data);
     }
 }

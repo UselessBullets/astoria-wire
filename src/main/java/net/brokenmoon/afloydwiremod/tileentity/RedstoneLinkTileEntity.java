@@ -32,17 +32,17 @@ public class RedstoneLinkTileEntity extends AbstractWireTileEntity {
     }
     @Override
     public void update() {
-        if(inputs[0].floatvalue > 0 && !this.isActive && worldObj.blockExists(xCoord, yCoord, zCoord) && worldObj.getBlockId(xCoord, yCoord, zCoord) == WireMod.LinkTileInactive.blockID){
+        if(inputs[0].floatvalue > 0 && !this.isActive && worldObj.isBlockLoaded(x, y, z) && worldObj.getBlockId(x, y, z) == WireMod.LinkTileInactive.id){
             this.shouldnotremove = true;
-            RedstoneLinkTile.updateLinkBlockState(true, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+            RedstoneLinkTile.updateLinkBlockState(true, this.worldObj, this.x, this.y, this.z);
             this.shouldnotremove = false;
             this.isActive = true;
-        } else if(inputs[0].floatvalue <= 0 && this.isActive && worldObj.blockExists(xCoord, yCoord, zCoord) && worldObj.getBlockId(xCoord, yCoord, zCoord) == WireMod.LinkTileActive.blockID){
+        } else if(inputs[0].floatvalue <= 0 && this.isActive && worldObj.isBlockLoaded(x, y, z) && worldObj.getBlockId(x, y, z) == WireMod.LinkTileActive.id){
             this.shouldnotremove = true;
-            RedstoneLinkTile.updateLinkBlockState(false, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+            RedstoneLinkTile.updateLinkBlockState(false, this.worldObj, this.x, this.y, this.z);
             this.shouldnotremove = false;
             this.isActive = false;
         }
-        worldObj.markBlockNeedsUpdate(xCoord, yCoord, zCoord);
+        worldObj.markBlockNeedsUpdate(x, y, z);
     }
 }

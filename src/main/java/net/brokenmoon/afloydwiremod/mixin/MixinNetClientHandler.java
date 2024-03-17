@@ -45,7 +45,7 @@ public class MixinNetClientHandler implements INetHandler {
     public void wiremodHandleIODisc(WiremodPacketSyncIO packet) {
         boolean test = this.mc.theWorld.getBlockTileEntity(packet.x, packet.y, packet.z) instanceof ChipTileEntity;
         TileEntity tileentity;
-        if (this.mc.theWorld.blockExists(packet.x, packet.y, packet.z) && (tileentity = this.mc.theWorld.getBlockTileEntity(packet.x, packet.y, packet.z)) instanceof AbstractWireTileEntity) {
+        if (this.mc.theWorld.isBlockLoaded(packet.x, packet.y, packet.z) && (tileentity = this.mc.theWorld.getBlockTileEntity(packet.x, packet.y, packet.z)) instanceof AbstractWireTileEntity) {
             AbstractWireTileEntity wireEntity = (AbstractWireTileEntity)tileentity;
             wireEntity.inputs = packet.io;
             wireEntity.outputs = packet.oi;

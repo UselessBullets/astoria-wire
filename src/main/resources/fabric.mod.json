@@ -19,7 +19,10 @@
   "entrypoints": {
     "main": [
       "net.brokenmoon.afloydwiremod.WireMod"
-    ]
+    ],
+		"recipesReady": [
+			"net.brokenmoon.afloydwiremod.WireMod"
+		]
   },
   "mixins": [
     "afloydwiremod.mixins.json"

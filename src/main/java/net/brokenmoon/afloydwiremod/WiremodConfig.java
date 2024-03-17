@@ -1,5 +1,7 @@
 package net.brokenmoon.afloydwiremod;
 import com.moandjiezana.toml.Toml;
+import net.minecraft.core.block.Block;
+import net.minecraft.core.block.tag.BlockTags;
 
 import java.io.*;
 
@@ -32,6 +34,7 @@ public class WiremodConfig {
     public WiremodConfig(){
         Toml toml = new Toml().read(this.getConfig());
         //Packets
+		int offset = Block.blocksList.length;
         programmingPacket = toml.getLong("ids.packet.programming", (long)109).intValue();
         programmerGuiPacket = toml.getLong("ids.packet.programmerGui", (long)110).intValue();
         wiringPacket = toml.getLong("ids.packet.wiring", (long)111).intValue();
@@ -45,14 +48,14 @@ public class WiremodConfig {
         linkTileActiveID = toml.getLong("ids.tile.linkTileActive", (long)907).intValue();
         displayTileID = toml.getLong("ids.tile.displayTile", (long)908).intValue();
         //Items
-        programmerItemID = toml.getLong("ids.item.programmingTool", (long)909).intValue();
-        wiringItemID = toml.getLong("ids.item.wiringTool", (long)910).intValue();
-        redsilicaID = toml.getLong("ids.item.redSilica", (long)911).intValue();
-        dieID = toml.getLong("ids.item.chipDie", (long)912).intValue();
-        dieOvercookedID = toml.getLong("ids.item.chipDieOvercooked", (long)913).intValue();
+        programmerItemID = toml.getLong("ids.item.programmingTool", (long)909 + offset).intValue();
+        wiringItemID = toml.getLong("ids.item.wiringTool", (long)910 + offset).intValue();
+        redsilicaID = toml.getLong("ids.item.redSilica", (long)911 + offset).intValue();
+        dieID = toml.getLong("ids.item.chipDie", (long)912 + offset).intValue();
+        dieOvercookedID = toml.getLong("ids.item.chipDieOvercooked", (long)913 + offset).intValue();
         //Various settings
         scrollrate = toml.getLong("misc.scrollrate", (long)5).intValue();
-        
+
     }
     public static File getConfig() {
         File config = new File("config/AWM.toml");

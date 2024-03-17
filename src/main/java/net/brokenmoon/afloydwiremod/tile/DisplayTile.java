@@ -6,12 +6,12 @@ import net.minecraft.core.block.entity.TileEntity;
 import net.minecraft.core.block.material.Material;
 
 public class DisplayTile extends AbstractWireTileSided {
-    public DisplayTile(int i, Material material) {
-        super(i, material);
+    public DisplayTile(String key, int i, Material material) {
+        super(key, i, material);
     }
 
     @Override
-    protected TileEntity getBlockEntity() {
+    protected TileEntity getNewBlockEntity() {
         return new DisplayTileEntity();
     }
 }

@@ -2,18 +2,19 @@ package net.brokenmoon.afloydwiremod.api;
 
 import net.minecraft.core.block.material.Material;
 import net.minecraft.core.entity.EntityLiving;
-import net.minecraft.core.util.helper.Direction;
+import net.minecraft.core.enums.EnumDropCause;
+import net.minecraft.core.util.helper.Side;
 import net.minecraft.core.util.phys.AABB;
 import net.minecraft.core.world.World;
 
 public abstract class AbstractWireTileSided extends AbstractWireTile{
-    public AbstractWireTileSided(int i, Material material) {
-        super(i, material);
+    public AbstractWireTileSided(String key, int i, Material material) {
+        super(key, i, material);
         this.setBlockBounds(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
     }
     @Override
-    public void onBlockPlaced(World world, int x, int y, int z, Direction side, EntityLiving player, double sideHeight) {
-        int l = Direction.getLegacySide(side);
+    public void onBlockPlaced(World world, int x, int y, int z, Side side, EntityLiving player, double sideHeight) {
+        int l = side.getId();
         int i1 = 5;
         if (l == 1 && this.canPlaceOnTop(world, x, y - 1, z)) {
             i1 = 5;
@@ -106,7 +107,7 @@ public abstract class AbstractWireTileSided extends AbstractWireTile{
                     break;
             }
             if (flag) {
-                this.dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k));
+				this.dropBlockWithCause(world, EnumDropCause.WORLD, i, j, k, world.getBlockMetadata(i, j, k), world.getBlockTileEntity(i, j, k));
                 world.setBlockWithNotify(i, j, k, 0);
             }
         }
@@ -114,7 +115,7 @@ public abstract class AbstractWireTileSided extends AbstractWireTile{
 
     private boolean dropTileIfCantStay(World world, int i, int j, int k) {
         if (!this.canPlaceBlockAt(world, i, j, k)) {
-            this.dropBlockAsItem(world, i, j, k, world.getBlockMetadata(i, j, k));
+            this.dropBlockWithCause(world, EnumDropCause.WORLD, i, j, k, world.getBlockMetadata(i, j, k), world.getBlockTileEntity(i, j, k));
             world.setBlockWithNotify(i, j, k, 0);
             return false;
         }
@@ -170,10 +171,5 @@ public abstract class AbstractWireTileSided extends AbstractWireTile{
     @Override
     public boolean renderAsNormalBlock() {
         return false;
-    }
-
-    @Override
-    public int getRenderType(){
-        return 28;
     }
 }

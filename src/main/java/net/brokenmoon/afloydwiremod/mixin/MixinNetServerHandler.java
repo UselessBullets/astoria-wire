@@ -6,12 +6,10 @@ import net.brokenmoon.afloydwiremod.mixinInterfaces.INetHandler;
 import net.brokenmoon.afloydwiremod.packet.*;
 import net.brokenmoon.afloydwiremod.tileentity.ChipTileEntity;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.src.EntityPlayerMP;
-import net.minecraft.src.NetServerHandler;
+import net.minecraft.server.entity.player.EntityPlayerMP;
+import net.minecraft.server.net.handler.NetServerHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-
-import java.util.ArrayList;
 
 @Mixin(value = NetServerHandler.class, remap = false)
 public class MixinNetServerHandler implements INetHandler {
@@ -27,7 +25,7 @@ public class MixinNetServerHandler implements INetHandler {
 
     @Override
     public void wiremodHandleProgramTile(WiremodProgrammerPacket packet) {
-        ((ChipTileEntity)this.mcServer.getWorldManager(this.playerEntity.dimension).getBlockTileEntity(packet.x, packet.y, packet.z)).setMode(packet.mode);
+        ((ChipTileEntity)this.mcServer.getDimensionWorld(this.playerEntity.dimension).getBlockTileEntity(packet.x, packet.y, packet.z)).setMode(packet.mode);
     }
 
     @Override
@@ -46,24 +44,24 @@ public class MixinNetServerHandler implements INetHandler {
             case 0:
                 AbstractWireTileEntity wireEntity;
                 if(!packet.backwired) {
-                    wireEntity = (AbstractWireTileEntity) this.mcServer.getWorldManager(this.playerEntity.dimension).getBlockTileEntity(packet.x1, packet.y1, packet.z1);
+                    wireEntity = (AbstractWireTileEntity) this.mcServer.getDimensionWorld(this.playerEntity.dimension).getBlockTileEntity(packet.x1, packet.y1, packet.z1);
                     wireEntity.outputs[packet.slot1].wire = new WireConnection(packet.x2, packet.y2, packet.z2, packet.slot1, packet.slot2, packet.xadd, packet.yadd, packet.zadd, packet.sideadd, packet.backwired, packet.red, packet.green, packet.blue, packet.alpha, packet.width);
                 } else{
-                    wireEntity = (AbstractWireTileEntity) this.mcServer.getWorldManager(this.playerEntity.dimension).getBlockTileEntity(packet.x2, packet.y2, packet.z2);
+                    wireEntity = (AbstractWireTileEntity) this.mcServer.getDimensionWorld(this.playerEntity.dimension).getBlockTileEntity(packet.x2, packet.y2, packet.z2);
                     wireEntity.outputs[packet.slot2].wire = new WireConnection(packet.x1, packet.y1, packet.z1, packet.slot2, packet.slot1, packet.xadd, packet.yadd, packet.zadd, packet.sideadd, packet.backwired, packet.red, packet.green, packet.blue, packet.alpha, packet.width);
                 }
                 wireEntity.update();
                 wireEntity.updateIO();
                 break;
             case 1:
-                AbstractWireTileEntity otherEntity = (AbstractWireTileEntity)this.mcServer.getWorldManager(this.playerEntity.dimension).getBlockTileEntity(packet.x1, packet.y1, packet.z1);
+                AbstractWireTileEntity otherEntity = (AbstractWireTileEntity)this.mcServer.getDimensionWorld(this.playerEntity.dimension).getBlockTileEntity(packet.x1, packet.y1, packet.z1);
                 otherEntity.inputs[packet.slot2].wire = new WireConnection(packet.x2, packet.y2, packet.z2, packet.slot2, packet.slot1);
                 otherEntity.update();
                 otherEntity.updateIO();
                 break;
         }
-        this.mcServer.getWorldManager(this.playerEntity.dimension).markBlockNeedsUpdate(packet.x1, packet.y1, packet.z1);
-        this.mcServer.getWorldManager(this.playerEntity.dimension).markBlockNeedsUpdate(packet.x2, packet.y2, packet.z2);
+        this.mcServer.getDimensionWorld(this.playerEntity.dimension).markBlockNeedsUpdate(packet.x1, packet.y1, packet.z1);
+        this.mcServer.getDimensionWorld(this.playerEntity.dimension).markBlockNeedsUpdate(packet.x2, packet.y2, packet.z2);
     }
 
     @Override
@@ -73,7 +71,7 @@ public class MixinNetServerHandler implements INetHandler {
 
     @Override
     public void wiremodHandleSettings(WiremodSettingsPacket packet) {
-        AbstractWireTileEntity wireEntity = (AbstractWireTileEntity) this.mcServer.getWorldManager(this.playerEntity.dimension).getBlockTileEntity(packet.x, packet.y, packet.z);
+        AbstractWireTileEntity wireEntity = (AbstractWireTileEntity) this.mcServer.getDimensionWorld(this.playerEntity.dimension).getBlockTileEntity(packet.x, packet.y, packet.z);
         switch(packet.mode){
             case 0:
                 wireEntity.outputs[0].floatvalue = packet.value;

@@ -13,7 +13,7 @@ public class GuiSettings extends GuiScreen {
     private EntityPlayer player;
     private AbstractWireTileEntity wireEntity;
     @Override
-    public void initGui() {
+    public void init() {
         //this.height - 240 is top
         //This.width / 2 - 214 is left
         //Inputs
