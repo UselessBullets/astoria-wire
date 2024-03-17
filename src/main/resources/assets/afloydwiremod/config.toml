@@ -1,0 +1,26 @@
+[ids]
+
+[ids.tile]
+chipTile = 905
+linkTileInactive = 906
+linkTileActive = 907
+displayTile = 908
+
+[ids.item]
+programmingTool = 909
+wiringTool = 910
+redSilica = 911
+chipDie = 912
+chipDieOvercooked = 913
+
+[ids.packet]
+programming = 109
+programmerGui = 110
+wiring = 111
+wiringGui = 112
+wiringSettingsGui = 113
+sync = 114
+chipSettingsGui = 115
+
+[misc]
+scrollrate = 5

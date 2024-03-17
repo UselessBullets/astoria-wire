@@ -1,0 +1,19 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "net.brokenmoon.afloydwiremod.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "mixins": [
+        "MixinEntityPlayerSP",
+        "MixinEntityPlayerMP",
+        "MixinBlockRenderer",
+        "MixinNetClientHandler",
+        "MixinNetServerHandler",
+        "AccessorPacket"
+    ],
+    "client": [
+    ],
+    "injectors": {
+        "defaultRequire": 1
+  }
+}

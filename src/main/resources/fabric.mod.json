@@ -1,44 +1,41 @@
 {
   "schemaVersion": 1,
-  "id": "examplemod",
+  "id": "afloydwiremod",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This mod aims to help new BTA modders.",
+  "name": "Wire Mod",
+  "description": "A mod inspired by the gmod WireMod.",
   "authors": [
-    "Turnip Labs"
+    "Astoria"
   ],
   "contact": {
     "homepage": "",
     "sources": ""
   },
 
-	"icon": "icon.png",
   "license": "CC0-1.0",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-			"turniplabs.examplemod.ExampleMod"
-    ],
-		"beforeGameStart": [
-			"turniplabs.examplemod.ExampleMod"
-		],
-		"afterGameStart": [
-			"turniplabs.examplemod.ExampleMod"
-		],
-		"recipesReady": [
-			"turniplabs.examplemod.ExampleMod"
-		]
-	},
+      "net.brokenmoon.afloydwiremod.WireMod"
+    ]
+  },
   "mixins": [
-      "examplemod.mixins.json"
+    "afloydwiremod.mixins.json"
   ],
 
   "depends": {
-		"minecraft": "~7.1-beta.1",
     "fabricloader": ">=0.13.3"
   },
   "suggests": {
+  },
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/src/EntityPlayerSP": ["net/brokenmoon/afloydwiremod/mixinInterfaces/IEntityPlayer"],
+      "net/minecraft/src/EntityPlayerMP": ["net/brokenmoon/afloydwiremod/mixinInterfaces/IEntityPlayer"],
+      "net/minecraft/src/NetClientHandler": ["net/brokenmoon/afloydwiremod/mixinInterfaces/INetHandler"],
+      "net/minecraft/src/NetServerHandler": ["net/brokenmoon/afloydwiremod/mixinInterfaces/INetHandler"]
+    }
   }
 }

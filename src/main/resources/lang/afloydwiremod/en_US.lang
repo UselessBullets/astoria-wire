@@ -1,0 +1,16 @@
+item.afloydwiremod.toolProgrammer.name=Programming Tool
+item.afloydwiremod.toolProgrammer.desc=Used to program chips.
+item.afloydwiremod.toolWiring.name=Wiring Tool
+item.afloydwiremod.toolWiring.desc=Used to connect outputs to inputs.
+item.afloydwiremod.redSilica.name=Red Silica
+item.afloydwiremod.redSilica.desc=Smeltable into logical products.
+item.afloydwiremod.chipDie.name=Silicon Die
+item.afloydwiremod.chipDie.desc=Too fragile to use unpackaged.
+item.afloydwiremod.chipDieBroken.name=Broken Die
+item.afloydwiremod.chipDieBroken.desc=Destroyed by the temperatures of the Blast Furnace.
+tile.afloydwiremod.chipTile.name=Chip
+tile.afloydwiremod.chipTile.desc=Used to preform mathematical calculations.
+tile.afloydwiremod.linkTile.name=Redstone Link
+tile.afloydwiremod.linkTile.desc=Used to interface chips with redstone devices.
+tile.afloydwiremod.displayTile.name=Display
+tile.afloydwiremod.displayTile.desc=Used to output values from wires.
